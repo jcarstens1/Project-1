@@ -59,6 +59,6 @@ class Controller(QMainWindow, Ui_MainWindow):
             else:
                 tip = 0
             total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
-            self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:{" " * 34}${food:.2f}\nDrink:{" " * 33}${drink:.2f}\nDessert:{" " * 29}${dessert:.2f}\nTax:{" " * 36}${total_tax:.2f}\nTip:{" " * 37}${total_tip:.2f}\n\nTOTAL:{" " * 31}${grand_total:.2f}')
+            self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}')
         except ValueError:
             self.Summary_Label.setText(f'\n\n\n{" " * 15}Food drink, and dessert\n{" " * 15}need to be numeric\n{" " * 15}e.g. 10.25 not $10.25')
