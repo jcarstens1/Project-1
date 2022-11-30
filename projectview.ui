@@ -382,7 +382,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Custom</string>
+     <string>Custom $</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="Custom_Entry">

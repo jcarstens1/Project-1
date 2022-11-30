@@ -19,8 +19,14 @@ class Controller(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.Submit_Button.clicked.connect(lambda: self.submit())
         self.Clear_Button.clicked.connect(lambda: self.clear())
-        self.Radio_Custom.clicked.connect(lambda: self.custom())
+        self.Radio_Custom.clicked.connect(lambda:self.custom())
+        self.Radio_10.clicked.connect(lambda: self.radio())
+        self.Radio_15.clicked.connect(lambda: self.radio())
+        self.Radio_20.clicked.connect(lambda: self.radio())
 
+    def radio(self):
+        self.Custom_Entry.setReadOnly(True)
+        self.Custom_Entry.setText('')
 
     def custom(self):
         self.Custom_Entry.setReadOnly(False)
@@ -41,12 +47,12 @@ class Controller(QMainWindow, Ui_MainWindow):
             food = float(self.Food_Entry.text())
             drink = float(self.Drink_Entry.text())
             dessert = float(self.Dessert_Entry.text())
-            if self.Radio_15.isChecked():
+            if self.Radio_10.isChecked():
+                tip = 0.1
+            elif self.Radio_15.isChecked():
                 tip = 0.15
             elif self.Radio_20.isChecked():
                 tip = 0.2
-            elif self.Radio_10.isChecked():
-                tip = 0.1
             elif self.Radio_Custom.isChecked():
                 tip = float(self.Custom_Entry.text()) / 100
             else:

@@ -210,7 +210,7 @@ class Ui_MainWindow(object):
         self.Drink_Label.setText(_translate("MainWindow", "Drink"))
         self.Dessert_Label.setText(_translate("MainWindow", "Dessert"))
         self.Tip_Label.setText(_translate("MainWindow", "Tip"))
-        self.Radio_Custom.setText(_translate("MainWindow", "Custom"))
+        self.Radio_Custom.setText(_translate("MainWindow", "Custom $"))
         self.Percent_Label.setText(_translate("MainWindow", "%"))
 
 
