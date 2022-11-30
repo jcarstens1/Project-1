@@ -8,7 +8,7 @@ QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 def calculate(food, drink, dessert, tip):
     tax = 0.1
     total_tax = (food + drink + dessert) * tax
-    if tip[0] == 'percent':
+    if tip[0] is 'percent':
         total_tip = (food + drink + dessert + total_tax) * tip[1]
     else:
         total_tip = food + drink + dessert + total_tax + tip[1]
@@ -56,8 +56,6 @@ class Controller(QMainWindow, Ui_MainWindow):
                 tip = ['percent', .2]
             elif self.Radio_Custom.isChecked():
                 tip = ['amount', float(self.Custom_Entry.text())]
-            else:
-                tip = 0
             total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
             self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:{" " * 34}${food:.2f}\nDrink:{" " * 33}${drink:.2f}\nDessert:{" " * 29}${dessert:.2f}\nTax:{" " * 36}${total_tax:.2f}\nTip:{" " * 37}${total_tip:.2f}\n\nTOTAL:{" " * 31}${grand_total:.2f}')
         except ValueError:
