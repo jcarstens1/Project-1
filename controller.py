@@ -8,7 +8,10 @@ QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 def calculate(food, drink, dessert, tip):
     tax = 0.1
     total_tax = (food + drink + dessert) * tax
-    total_tip = (food + drink + dessert + total_tax) * tip
+    if tip[0] == 'percent':
+        total_tip = (food + drink + dessert + total_tax) * tip[1]
+    else:
+        total_tip = food + drink + dessert + total_tax + tip[1]
     grand_total = food + drink + dessert + total_tax + total_tip
     return total_tax, total_tip, grand_total
 
@@ -19,7 +22,7 @@ class Controller(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.Submit_Button.clicked.connect(lambda: self.submit())
         self.Clear_Button.clicked.connect(lambda: self.clear())
-        self.Radio_Custom.clicked.connect(lambda:self.custom())
+        self.Radio_Custom.clicked.connect(lambda: self.custom())
         self.Radio_10.clicked.connect(lambda: self.radio())
         self.Radio_15.clicked.connect(lambda: self.radio())
         self.Radio_20.clicked.connect(lambda: self.radio())
@@ -30,8 +33,6 @@ class Controller(QMainWindow, Ui_MainWindow):
 
     def custom(self):
         self.Custom_Entry.setReadOnly(False)
-
-
 
     def clear(self):
         self.Food_Entry.setText('')
@@ -48,13 +49,13 @@ class Controller(QMainWindow, Ui_MainWindow):
             drink = float(self.Drink_Entry.text())
             dessert = float(self.Dessert_Entry.text())
             if self.Radio_10.isChecked():
-                tip = 0.1
+                tip = ['percent', .1]
             elif self.Radio_15.isChecked():
-                tip = 0.15
+                tip = ['percent', .15]
             elif self.Radio_20.isChecked():
-                tip = 0.2
+                tip = ['percent', .2]
             elif self.Radio_Custom.isChecked():
-                tip = float(self.Custom_Entry.text()) / 100
+                tip = ['amount', float(self.Custom_Entry.text())]
             else:
                 tip = 0
             total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
