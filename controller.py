@@ -1,3 +1,4 @@
+
 from PyQt5.QtWidgets import *
 from view import *
 
@@ -5,7 +6,15 @@ QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 
-def calculate(food, drink, dessert, tip):
+def calculate(food: float, drink: float, dessert: float, tip: list) -> tuple:
+    """
+    Function to compute the total amount of the bill
+    :param food: Food total
+    :param drink: Drink total
+    :param dessert: Dessert Total
+    :param tip: Tip Total
+    :return: grand total, total tip, total tax
+    """
     tax = 0.1
     total_tax = (food + drink + dessert) * tax
     if 'percent' in tip[0]:
@@ -17,7 +26,13 @@ def calculate(food, drink, dessert, tip):
 
 
 class Controller(QMainWindow, Ui_MainWindow):
+    """
+    A class to represent app logic
+    """
     def __init__(self, *args, **kwargs):
+        """
+        Constructor to add methods to buttons on application
+        """
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.Submit_Button.clicked.connect(lambda: self.submit())
@@ -28,7 +43,11 @@ class Controller(QMainWindow, Ui_MainWindow):
         self.Radio_20.clicked.connect(lambda: self.custom_switch())
         self.Split_Checkbox.clicked.connect(lambda: self.split_switch())
 
-    def split_switch(self):
+    def split_switch(self) -> None:
+        """
+        Method to turn split check input on and off
+        :return: none
+        """
         if self.Split_Checkbox.isChecked() is True:
             self.Split_Entry.setReadOnly(False)
             self.Split_Entry.setValue(2)
@@ -38,14 +57,22 @@ class Controller(QMainWindow, Ui_MainWindow):
             self.Split_Entry.setValue(1)
             self.Split_Entry.setReadOnly(True)
 
-    def custom_switch(self):
+    def custom_switch(self) -> None:
+        """
+        Method to turn custom tip input on and off
+        :return: none
+        """
         if self.Radio_Custom.isChecked() is True:
             self.Custom_Entry.setReadOnly(False)
         else:
             self.Custom_Entry.setReadOnly(True)
             self.Custom_Entry.setText('')
 
-    def clear(self):
+    def clear(self) -> None:
+        """
+        Method to clear input and place app into default status
+        :return: none
+        """
         self.Food_Entry.setText('')
         self.Drink_Entry.setText('')
         self.Dessert_Entry.setText('')
@@ -58,7 +85,11 @@ class Controller(QMainWindow, Ui_MainWindow):
         self.Split_Checkbox.setChecked(False)
         self.Split_Entry.setReadOnly(True)
 
-    def submit(self):
+    def submit(self) -> None:
+        """
+        Method to display billing details
+        :return: bill details
+        """
         try:
             food = float(self.Food_Entry.text())
             drink = float(self.Drink_Entry.text())
