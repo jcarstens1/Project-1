@@ -521,7 +521,7 @@ font: 81 13pt &quot;Rockwell Extra Bold&quot;</string>
      <string/>
     </property>
     <property name="maxLength">
-     <number>4</number>
+     <number>5</number>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

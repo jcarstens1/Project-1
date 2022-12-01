@@ -237,7 +237,7 @@ class Ui_MainWindow(object):
         self.Radio_Custom.setStyleSheet("font: 81 12pt \"Rockwell Extra Bold\";")
         self.Radio_Custom.setObjectName("Radio_Custom")
         self.Custom_Entry = QtWidgets.QLineEdit(self.centralwidget)
-        self.Custom_Entry.setGeometry(QtCore.QRect(420, 280, 51, 20))
+        self.Custom_Entry.setGeometry(QtCore.QRect(420, 280, 65, 20))
         font = QtGui.QFont()
         font.setFamily("Rockwell Extra Bold")
         font.setPointSize(13)
@@ -252,7 +252,7 @@ class Ui_MainWindow(object):
 "border-color:rgb(0, 0, 0);\n"
 "font: 81 13pt \"Rockwell Extra Bold\"")
         self.Custom_Entry.setText("")
-        self.Custom_Entry.setMaxLength(4)
+        self.Custom_Entry.setMaxLength(6)
         self.Custom_Entry.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Custom_Entry.setReadOnly(True)
         self.Custom_Entry.setClearButtonEnabled(False)
