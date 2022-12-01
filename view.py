@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(500, 765)
-        MainWindow.setMinimumSize(QtCore.QSize(500, 700))
-        MainWindow.setMaximumSize(QtCore.QSize(500, 900))
+        MainWindow.resize(500, 750)
+        MainWindow.setMinimumSize(QtCore.QSize(500, 750))
+        MainWindow.setMaximumSize(QtCore.QSize(500, 750))
         MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet("background-color: rgb(0, 85, 127);")
