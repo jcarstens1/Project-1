@@ -21,17 +21,28 @@ class Controller(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.Submit_Button.clicked.connect(lambda: self.submit())
         self.Clear_Button.clicked.connect(lambda: self.clear())
-        self.Radio_Custom.clicked.connect(lambda: self.custom())
-        self.Radio_10.clicked.connect(lambda: self.radio())
-        self.Radio_15.clicked.connect(lambda: self.radio())
-        self.Radio_20.clicked.connect(lambda: self.radio())
+        self.Radio_Custom.clicked.connect(lambda: self.custom_switch())
+        self.Radio_10.clicked.connect(lambda: self.custom_switch())
+        self.Radio_15.clicked.connect(lambda: self.custom_switch())
+        self.Radio_20.clicked.connect(lambda: self.custom_switch())
+        self.Split_Checkbox.clicked.connect(lambda: self.split_switch())
 
-    def radio(self):
-        self.Custom_Entry.setReadOnly(True)
-        self.Custom_Entry.setText('')
+    def split_switch(self):
+        if self.Split_Checkbox.isChecked() is True:
+            self.Split_Entry.setReadOnly(False)
+            self.Split_Entry.setValue(2)
+            self.Split_Entry.setMinimum(2)
+        else:
+            self.Split_Entry.setMinimum(1)
+            self.Split_Entry.setValue(1)
+            self.Split_Entry.setReadOnly(True)
 
-    def custom(self):
-        self.Custom_Entry.setReadOnly(False)
+    def custom_switch(self):
+        if self.Radio_Custom.isChecked() is True:
+            self.Custom_Entry.setReadOnly(False)
+        else:
+            self.Custom_Entry.setReadOnly(True)
+            self.Custom_Entry.setText('')
 
     def clear(self):
         self.Food_Entry.setText('')
@@ -40,37 +51,76 @@ class Controller(QMainWindow, Ui_MainWindow):
         self.Radio_10.click()
         self.Summary_Label.setText('')
         self.Custom_Entry.setText('')
+        self.Split_Entry.setMinimum(1)
+        self.Split_Entry.setValue(1)
         self.Custom_Entry.setReadOnly(True)
         self.Split_Checkbox.setChecked(False)
-        self.Split_Entry.setValue(1)
+        self.Split_Entry.setReadOnly(True)
     
     def submit(self):
-        if (self.Radio_10.isChecked()) or (self.Radio_15.isChecked()) or (self.Radio_20.isChecked()):
-            if self.Radio_10.isChecked():
-                tip = ['percent', .1]
-            elif self.Radio_15.isChecked():
-                tip = ['percent', .15]
-            else:
-                tip = ['percent', .2]
-        else:
-            tip = ['amount' ,float(self.Custom_Entry.text())]
-
         try:
             food = float(self.Food_Entry.text())
             drink = float(self.Drink_Entry.text())
             dessert = float(self.Dessert_Entry.text())
+            if self.Radio_10.isChecked():
+                tip = ['percent', .1]
+            elif self.Radio_15.isChecked():
+                tip = ['percent', .15]
+            elif self.Radio_20.isChecked():
+                tip = ['percent', .2]
+            elif self.Radio_Custom.isChecked():
+                tip = ['amount', float(self.Custom_Entry.text())]
+            else:
+                tip = 0
             total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
+            if self.Split_Checkbox.isChecked():
+                individual_amount = grand_total / self.Split_Entry.value()
+                self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}\nPer  Person:\t${individual_amount:.2f}')
+            else:
+                self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}')
         except ValueError:
-            self.Summary_Label.setText(f'\n\n\n{" " * 15}Food drink, and dessert\n{" " * 15}need to be numeric\n{" " * 15}e.g. 10.25 not $10.25')
-        
-        if self.Split_Checkbox.isChecked():
-            num_people = self.Split_Entry.value()
-            try:    
-                split_check = grand_total / num_people
-                self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}\nEach Pay:\t${split_check:.2f}')
-            except:
-                self.Summary_Label.setText(f'\n\n\n{" " * 15}Food drink, and dessert\n{" " * 15}need to be numeric\n{" " * 15}e.g. 10.25 not $10.25')
-        else:
-            total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
-            self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}')
-        
+            self.Summary_Label.setText(
+                f'\n\n\n{" " * 15}Food drink, and dessert\n{" " * 15}need to be numeric\n{" " * 15}e.g. 10.25 not $10.25')
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # if (self.Radio_10.isChecked()) or (self.Radio_15.isChecked()) or (self.Radio_20.isChecked()):
+        #     if self.Radio_10.isChecked():
+        #         tip = ['percent', .1]
+        #     elif self.Radio_15.isChecked():
+        #         tip = ['percent', .15]
+        #     else:
+        #         tip = ['percent', .2]
+        # else:
+        #     tip = ['amount', float(self.Custom_Entry.text())]
+        # try:
+        #     food = float(self.Food_Entry.text())
+        #     drink = float(self.Drink_Entry.text())
+        #     dessert = float(self.Dessert_Entry.text())
+        #     total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
+        # except ValueError:
+        #     self.Summary_Label.setText(f'\n\n\n{" " * 15}Food drink, and dessert\n{" " * 15}need to be numeric\n{" " * 15}e.g. 10.25 not $10.25')
+        #
+        # if self.Split_Checkbox.isChecked():
+        #     num_people = self.Split_Entry.value()
+        #
+        #
+        #
+        #     try:
+        #         split_check = grand_total / num_people
+        #         self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}\nEach Pay:\t${split_check:.2f}')
+        #     except:
+        #         self.Summary_Label.setText(f'\n\n\n{" " * 15}Food drink, and dessert\n{" " * 15}need to be numeric\n{" " * 15}e.g. 10.25 not $10.25')
+        # else:
+        #     total_tax, total_tip, grand_total = calculate(food, drink, dessert, tip)
+        #     self.Summary_Label.setText(f'{" " * 25}SUMMARY\n\nFood:\t\t${food:.2f}\nDrink:\t\t${drink:.2f}\nDessert:\t\t${dessert:.2f}\nTax:\t\t${total_tax:.2f}\nTip:\t\t${total_tip:.2f}\n\nTOTAL:\t\t${grand_total:.2f}')
