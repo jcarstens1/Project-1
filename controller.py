@@ -8,7 +8,7 @@ QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 def calculate(food, drink, dessert, tip):
     tax = 0.1
     total_tax = (food + drink + dessert) * tax
-    if tip[0] is 'percent':
+    if tip[0] == 'percent':
         total_tip = (food + drink + dessert + total_tax) * tip[1]
     else:
         total_tip = food + drink + dessert + total_tax + tip[1]
